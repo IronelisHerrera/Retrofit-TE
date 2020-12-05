@@ -5,6 +5,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SecondaryActivities.AllCommentsActivity">
+        tools:context=".MainActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:scrollbars="vertical"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/single_item"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/recycle_view_comments"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

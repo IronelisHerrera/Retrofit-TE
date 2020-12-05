@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.Adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.retrofit.Entities.Post;
+import com.example.retrofit.R;
 
 
 import java.io.Serializable;
@@ -15,41 +17,41 @@ import java.util.List;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder> implements Serializable {
 
     private final Context getcontext;
-    private final WhenCLickOnRecyclerRow clickOnRowListener;
+    private final recycler_view_post_listener recycler_view_post;
     private final List<Post> elements;
 
-    PostAdapter(Context getcontext, List<Post> elements, WhenCLickOnRecyclerRow clickOnRowListener)
+    public PostAdapter(Context getcontext, List<Post> elements, recycler_view_post_listener recycler_view_post)
     {
 
         this.getcontext = getcontext;
         this.elements = elements;
-        this.clickOnRowListener = clickOnRowListener;
+        this.recycler_view_post = recycler_view_post;
     }
 
 
 
-    public interface WhenCLickOnRecyclerRow {
+    public interface recycler_view_post_listener {
         void ClickOnRow(int adapterPosition);
     }
 
-    public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{ //implements View.OnClickListener
+    public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView id;
         TextView title;
         TextView body;
-        WhenCLickOnRecyclerRow clickOnRowListener;
+        recycler_view_post_listener recycler_view_post;
 
-        public Holder(@NonNull View itemView, WhenCLickOnRecyclerRow clickOnRowListener) {
+        public Holder(@NonNull View itemView, recycler_view_post_listener recycler_view_post) {
             super(itemView);
             id = itemView.findViewById(R.id._id);
             title = itemView.findViewById(R.id.title);
             body = itemView.findViewById(R.id.body);
-            this.clickOnRowListener = clickOnRowListener;
+            this.recycler_view_post = recycler_view_post;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            clickOnRowListener.ClickOnRow(getAdapterPosition());
+            recycler_view_post.ClickOnRow(getAdapterPosition());
         }
 
     }
@@ -58,7 +60,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Holder> implem
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item, null, false);
-        return new Holder(view, clickOnRowListener); //, clickOnRowListener
+        return new Holder(view, recycler_view_post);
     }
 
     @Override

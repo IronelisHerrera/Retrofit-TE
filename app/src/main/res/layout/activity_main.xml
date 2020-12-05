@@ -14,5 +14,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/single_item"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/recycle_view"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

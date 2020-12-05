@@ -2,12 +2,15 @@ package com.example.retrofit;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.retrofit.Adapters.PostAdapter;
+import com.example.retrofit.Entities.Post;
 import com.example.retrofit.SecondaryActivities.AllCommentsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,11 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  PostAdapter.WhenCLickOnRecyclerRow {
+public class MainActivity extends AppCompatActivity implements  PostAdapter.recycler_view_post_listener {
 
     private RecyclerView recyclerView;
     private List<Post> elements;
-    private static final String GET_CURRENT_ELEMENT_POSITION = "get_position";
+    public static final String EXTRA_MESSAGE_ELEMENT_POSITION = "get_position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements  PostAdapter.When
         listCall.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "An error has occur!"+response.code(),
+                            Toast.LENGTH_LONG).show();
+                }
 
                 elements = response.body();
 
@@ -58,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements  PostAdapter.When
         });
     }
     @Override
-    public void ClickOnRow(int position) {
+    public void ClickOnRow(int post_position) {
         Intent intent = new Intent(MainActivity.this, AllCommentsActivity.class);
-        intent.putExtra(GET_CURRENT_ELEMENT_POSITION, position);
+        intent.putExtra(EXTRA_MESSAGE_ELEMENT_POSITION, post_position);
         startActivity(intent);
     }
 
