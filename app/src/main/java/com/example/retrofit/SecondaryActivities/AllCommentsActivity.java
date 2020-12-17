@@ -33,10 +33,14 @@ public class AllCommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_comments);
 
-        //call data
 
+        /*
+          Here I capture the Id when I click in one post. Now I can filter the comments of that post Id.
+         */
         Intent intent = getIntent();
         int get_position =  intent.getIntExtra(MainActivity.EXTRA_MESSAGE_ELEMENT_POSITION, 1);
+
+        /*End block - calling Id Value*/
 
          recyclerView = findViewById(R.id.recycle_view_comments);
 
@@ -45,6 +49,7 @@ public class AllCommentsActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        /*Filter comments by post id*/
         Call<List<Comment>> list_call = retrofit.create(APIService.class).getCommentsByPost((get_position)+1);
         list_call.enqueue(new Callback<List<Comment>>() {
             @Override
@@ -63,7 +68,6 @@ public class AllCommentsActivity extends AppCompatActivity {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
-//
             }
 
             @Override
